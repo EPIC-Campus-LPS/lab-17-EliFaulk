@@ -10,6 +10,7 @@ public class ChatHistory {
 		Scanner sc = new Scanner(System.in);
 		
 		while (true) {
+			System.out.println("Enter a sentence: ");
 			String sentence = sc.nextLine();
 			if (sentence.toLowerCase().equals("stop")) {
 				break;
@@ -25,24 +26,53 @@ public class ChatHistory {
 		
 		
 		int size = words.size();
-		int unique = 0;
 		ArrayList<String> uniqueWords = new ArrayList<>();
 		int the = 0;
 		String longest = "";
 		boolean allLower = true;
+		String condensed = "";
+		
 		
 		for (String word : words) {
+			//Create ArrayList of all unique words
+			boolean isUnique = true;
+			for (String w : uniqueWords) {
+				if (w.equals(word.toLowerCase())) {
+					isUnique = false;
+				}
+			}
+			if (isUnique) {
+				uniqueWords.add(word.toLowerCase());
+				if (word.length() > 3) {
+					condensed = condensed + word.toLowerCase() + " ";
+				}
+			}
 			
+			//Count appearances of "the"
+			if (word.toLowerCase().equals("the")) {
+				the++;
+			}
+			
+			//Adjust longest word
+			if (word.length() > longest.length()) {
+				longest = word;
+			}
+			
+			//Check if lower case
+			if (!word.equals(word.toLowerCase())) {
+				allLower = false;
+			}
 		}
 		
 		
 		
 		System.out.println("CHAT REPORT:");
 		System.out.println("You used " + size + " words.");
-		System.out.println("You used " + unique + " unique words.");
+		System.out.println("You used " + uniqueWords.size() + " unique words.");
 		System.out.println("You used \"the\" " + the + " times.");
 		System.out.println("\"" + longest + "\" was the longest word.");
 		System.out.println("Are all words lowercase? " + allLower);
+		System.out.println("\nCondensed Chat History: " + condensed);
 
 	}
 
